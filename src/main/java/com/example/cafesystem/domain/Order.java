@@ -1,6 +1,7 @@
 package com.example.cafesystem.domain;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -26,9 +27,9 @@ public class Order {
   @MappedCollection(idColumn = "order_item_id", keyColumn = "order_id")
   private List<OrderItem> orderItem = new ArrayList<>();
 
-  public Order(int customerId, Timestamp orderAt, List<OrderItem> orderItem) {
+  public Order(int customerId, List<OrderItem> orderItem) {
     this.customerId = customerId;
-    this.orderAt = orderAt;
+    this.orderAt = Timestamp.valueOf(LocalDateTime.now());
     this.orderItem = orderItem;
   }
 

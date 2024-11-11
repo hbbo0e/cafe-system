@@ -9,3 +9,6 @@ spring:
       mode: always
       schema-locations: 'classpath:data/schema.sql'
       data-locations: 'classpath:data/data.sql'
+
+server:
+  port: 8383
