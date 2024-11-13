@@ -17,19 +17,19 @@ public class CustomerController {
     this.customerService = customerService;
   }
 
-  // ❓ builder
+  // ❓ builder, Response.success()
   @PostMapping("api/v1/customers")
-  public CustomerDto cureateNewCustomer(
+  public Response<CustomerDto> cureateNewCustomer(
       @RequestParam String name,
       @RequestParam String address,
       @RequestParam String phoneNumber
   ){
-    return customerService.newCustomer(
+    return Response.success(customerService.newCustomer(
         CreateCustomer.builder()
             .address(address)
             .name(name)
             .phoneNumber(phoneNumber)
-            .build()
+            .build())
     );
   }
 }

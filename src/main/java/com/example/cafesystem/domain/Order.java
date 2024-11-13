@@ -3,8 +3,10 @@ package com.example.cafesystem.domain;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -24,17 +26,18 @@ public class Order {
   @Column
   private Timestamp orderAt;
 
-  @MappedCollection(idColumn = "order_item_id", keyColumn = "order_id")
-  private List<OrderItem> orderItem = new ArrayList<>();
+  // ❓List -> Set 변경
+  @MappedCollection(idColumn = "order_id", keyColumn = "order_item_id")
+  private Set<OrderItem> orderItem = new HashSet<>();
 
-  public Order(int customerId, List<OrderItem> orderItem) {
+  public Order(int customerId, Set<OrderItem> orderItems) {
     this.customerId = customerId;
     this.orderAt = Timestamp.valueOf(LocalDateTime.now());
-    this.orderItem = orderItem;
+    this.orderItem = orderItems;
   }
 
   public static Order newOrder(CreateOrder createOrder){
-    List<OrderItem> items = new ArrayList<>();
+    Set<OrderItem> items = new HashSet<>();
 
     for (Map.Entry<Integer, Integer> entry : createOrder.getQuantityByProduct().entrySet()){
       items.add(new OrderItem(entry.getKey(), entry.getValue()));
